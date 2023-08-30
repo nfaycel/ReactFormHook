@@ -1,7 +1,7 @@
 //const { name, ref, onChange, onBlur } = register("username")
 //console.log("register:" + JSON.stringify(control));
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form"
 import { DevTool } from "@hookform/devtools"
 
@@ -21,6 +21,12 @@ export const YouTubeForm = () => {
         email: "nfaical3@gmail.com"
     })
 
+    const [cUser, setCUser] = useState({
+        username: "f.nouar",
+        email: "m.mohamed@gmail.com",
+        channel: "React Dev",
+    })
+
 
     const {
         register,
@@ -34,19 +40,14 @@ export const YouTubeForm = () => {
         defaultValues: mUser
     })
 
-    React.useEffect(() => {
-        const fetchedData = {
-            username: "f.nouar",
-            email: "m.mohamed@gmail.com",
-            channel: "React Dev",
-          };
-        
-          Object.keys(fetchedData).forEach((fieldName) => {
-            const castFieldName = fieldName as keyof typeof fetchedData;
-            setValue(castFieldName, fetchedData[castFieldName]);
-          });
+    useEffect(() => {
+        Object.keys(cUser).forEach((fieldName) => {
+            const castFieldName = fieldName as keyof typeof cUser;
+            setValue(castFieldName, cUser[castFieldName]);
+        });
 
-    }, []);
+    }, [cUser]);
+
 
 
     React.useEffect(() => {
@@ -58,6 +59,10 @@ export const YouTubeForm = () => {
 
     const onSubmit = (data: FormValues) => {
         console.log("Form submitted", data)
+    }
+
+    const changeCUser = () => {
+        setCUser({ username: "faicel", email: "azer@yahoo.fr", channel: "azert" })
     }
 
     renderCount++
@@ -76,7 +81,7 @@ export const YouTubeForm = () => {
 
                 <button>Submit</button>
             </form>
-
+            <button className='mt-5' onClick={changeCUser}>change the user</button>
             <DevTool control={control} />
         </div>
     )
